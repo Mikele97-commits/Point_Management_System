@@ -2,14 +2,67 @@
 <html>
 <head>
   <script src="script.JS"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<button onclick="sendData()">Send Data</button>
-<textarea name="First Name" id="firstName"></textarea>
-<textarea name="Last Name" id="lastName"></textarea>
-<textarea name="Email" id="email"></textarea>
+<div id="dataAndTable">
 
-<p id="out"></p>
+  <div id="sendAndAreas">
+ <table>
+  <tr>Add new users</tr>
+  <tr>
+  <th>First Name:</th>
+  <th><textarea id="firstName" placeholder="First Name"></textarea></th>
+  </tr>
+  <tr><th>Last Name:</th>
+  <th><textarea id="lastName" placeholder="Last Name"></textarea></th>
+  </tr>
+  <tr><th>E-Mail:</th>
+  <th><textarea id="email" placeholder="E-Mail"></textarea></th>
+  </tr>
+  </table>
+  <button onclick="sendData()">Send Data</button>
+  <button onclick="showUsers()">Show Users</button>
+  </div>
+
+  <div id="tablediv">
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Active</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  </div>
+
+  <div id="editdiv">
+    <table>
+      <tr>
+        <th>Full Name</th>
+        <th id="fullName"></th>
+      </tr>
+      <tr>
+        <th>User ID:</th>
+        <th><input type="number" id="counter" value="1" min ="1"></th>
+      </tr>
+      <tr>
+        <th>Activate/Deactivate:</th>
+        <th><Button>A/D</Button></th>
+      </tr>
+      <tr>
+        <th>Add/Deduct Points:</th>
+        <th><button>Add</button><button>Subtract</button></th></tr>
+    </table>
+  </div>
+</div>
+<button onclick="testData()">Load test data</button>
 
 
 </body>

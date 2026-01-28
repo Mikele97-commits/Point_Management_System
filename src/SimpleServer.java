@@ -3,6 +3,8 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.OutputStream;
+import java.util.List;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -16,6 +18,7 @@ public class SimpleServer {
 
 
         server.createContext("/add", new AddHandler());
+        server.createContext("/show", new ShowHandler());
 
         server.start();
         System.out.println("Server started on http://localhost:8080");
@@ -39,10 +42,28 @@ public class SimpleServer {
             UserData user = mapper.readValue(body, UserData.class);
             UserList.createAndAddUser(user.firstName, user.lastName, user.email);
             UserList.showUsers();
+            String response = "{\"status\":\"ok\"}";
+            exchange.sendResponseHeaders(200, response.getBytes().length);
 
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        }
+    }
 
-
-
+    static class ShowHandler implements HttpHandler {
+        public void handle(HttpExchange exchange) throws IOException {
+            List<User>usersShow= UserList.users;
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
+            System.out.println("Request (show) received");
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(usersShow);
+            System.out.println(json);
+            exchange.sendResponseHeaders(200, json.getBytes().length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(json.getBytes());
+            }
         }
     }
 }
