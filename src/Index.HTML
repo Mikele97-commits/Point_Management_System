@@ -54,11 +54,12 @@
       </tr>
       <tr>
         <th>Activate/Deactivate:</th>
-        <th><Button>A/D</Button></th>
+        <th><Button onclick="activate()">A/D</Button></th>
       </tr>
       <tr>
         <th>Add/Deduct Points:</th>
-        <th><button>Add</button><button>Subtract</button></th></tr>
+        <th><input type="number" id="points" placeholder="Points"></input></th>
+        <th><button onclick="changePoints(true)">Add</button><button onclick="changePoints(false)">Subtract</button></th></tr>
     </table>
   </div>
 </div>

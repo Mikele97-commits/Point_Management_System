@@ -4,7 +4,6 @@ async function showUsers() {
   let number=0
   const res = await fetch("http://localhost:8080/show");
   const data = await res.json();
-  console.log(data)
 
    const tbody = document.getElementById("usersTable").querySelector("tbody");
   tbody.innerHTML = "";
@@ -57,14 +56,14 @@ async function sendData(){
   }
   const jsonData=JSON.stringify(allData)
   
-  fetch("http://localhost:8080/add",{
+  const answer = await fetch("http://localhost:8080/add",{
     method: "POST",
     body:jsonData
   });
-
-  console.log("Sent")
-  console.log(jsonData)
-
+  if(!answer.isok){
+    const text = await answer.text();
+    console.log(text)
+  }
 }
 
 async function testData() {
@@ -74,9 +73,6 @@ async function testData() {
     email:"michal.minich@gmail.com"
   }
     const jsonUser1=JSON.stringify(user1)
-
-      console.log(jsonUser1)
-
     
      const user2={
     firstName:"Karolina",
@@ -84,7 +80,6 @@ async function testData() {
     email:"karo.dub@gmail.com"
   }
     const jsonUser2=JSON.stringify(user2)
-    console.log(jsonUser2)
 
     const user3={
     firstName:"Marcella",
@@ -92,7 +87,7 @@ async function testData() {
     email:"mar.ciemp@gmail.com"
   }
     const jsonUser3=JSON.stringify(user3)
-    console.log(jsonUser3)
+    
 
     fetch("http://localhost:8080/add",{
     method: "POST",
@@ -111,7 +106,32 @@ async function testData() {
 
 }
 
-document.getElementById("counter").addEventListener("input", () => {
-  const value = document.getElementById("counter").value;
-  console.log(value);
-});
+
+async function activate() {
+  let ID = document.getElementById("counter").value;
+  
+  const answer = await fetch("http://localhost:8080/activate",{
+    method: "POST",
+    body:ID
+  });
+  const text = await answer.text();
+  console.log(text);
+  showUsers();
+}
+
+async function changePoints(positive) {
+    let ID = document.getElementById("counter").value;
+    let points=document.getElementById("points").value;
+
+     if(!positive)
+      points=-points;
+
+    const answer = await fetch("http://localhost:8080/points",{
+    method: "POST",
+    body:ID + "," + points
+    });
+
+    const text = await answer.text();
+    console.log(text);
+    showUsers();
+}
