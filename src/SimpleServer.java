@@ -15,7 +15,6 @@ public class SimpleServer {
     public static void main(String[] args) throws Exception {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-
         server.createContext("/add", new AddHandler());
         server.createContext("/show", new ShowHandler());
         server.createContext("/activate", new ActivateHandler());
@@ -36,7 +35,6 @@ public class SimpleServer {
             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, OPTIONS");
             exchange.getResponseHeaders().add("Content-Type", "application/json");
             String body = new String(exchange.getRequestBody().readAllBytes());
-            System.out.println("Request received" + body);
             ObjectMapper mapper = new ObjectMapper();
             UserData user = mapper.readValue(body, UserData.class);
             if (user.firstName == null || user.firstName.isBlank() || user.lastName == null||user.lastName.isBlank()||user.email == null||user.email.isBlank()) {
@@ -46,14 +44,21 @@ public class SimpleServer {
                 exchange.getResponseBody().close();
                 return;
             }
+            if(UserList.emailExists(user.email)){
+                String response = "Email already in use";
+                exchange.sendResponseHeaders(403, response.getBytes().length);
+                exchange.getResponseBody().write(response.getBytes());
+                exchange.getResponseBody().close();
+                return;
+            }
             UserList.createAndAddUser(user.firstName, user.lastName, user.email);
-            UserList.showUsers();
-            String response = "{\"status\":\"ok\"}";
+            String response = "User succesfully added";
             exchange.sendResponseHeaders(200, response.getBytes().length);
 
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(response.getBytes());
             }
+
         }
     }
 

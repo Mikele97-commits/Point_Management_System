@@ -20,6 +20,7 @@
   <tr><th>E-Mail:</th>
   <th><textarea id="email" placeholder="E-Mail"></textarea></th>
   </tr>
+  <tr><th>  <div id="emailError" class="error"></div></th></tr>
   </table>
   <button onclick="sendData()">Send Data</button>
   <button onclick="showUsers()">Show Users</button>
@@ -60,6 +61,8 @@
         <th>Add/Deduct Points:</th>
         <th><input type="number" id="points" placeholder="Points"></input></th>
         <th><button onclick="changePoints(true)">Add</button><button onclick="changePoints(false)">Subtract</button></th></tr>
+        <tr><th>  <div id="pointsError" class="error"></div></th></tr>
+
     </table>
   </div>
 </div>

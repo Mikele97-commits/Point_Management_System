@@ -10,9 +10,12 @@ public class UserList {
         users.add(user);
     }
 
-    public static void showUsers() {
+    public static boolean emailExists(String email) {
         for (User user : users) {
-            System.out.println(user.firstName + " " + user.lastName +" "+ user.ID + " " + user.email + user.active);
+            if (email.equals(user.email)) {
+                return true;
+            }
         }
+        return false;
     }
 }

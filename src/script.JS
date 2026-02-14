@@ -63,7 +63,10 @@ async function sendData(){
   if(!answer.isok){
     const text = await answer.text();
     console.log(text)
+    document.getElementById("emailError").textContent = text;
+    return;
   }
+  document.getElementById("emailError").textContent = "";
 }
 
 async function testData() {
@@ -132,6 +135,7 @@ async function changePoints(positive) {
     });
 
     const text = await answer.text();
-    console.log(text);
+    document.getElementById("pointsError").textContent = text;
+
     showUsers();
 }
