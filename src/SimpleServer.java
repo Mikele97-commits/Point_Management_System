@@ -44,8 +44,16 @@ public class SimpleServer {
                 exchange.getResponseBody().close();
                 return;
             }
+
             if(UserList.emailExists(user.email)){
                 String response = "Email already in use";
+                exchange.sendResponseHeaders(403, response.getBytes().length);
+                exchange.getResponseBody().write(response.getBytes());
+                exchange.getResponseBody().close();
+                return;
+            }
+            if(!EmailValidator.isValid(user.email)){
+                String response = "Incorrect email format. Letters and numbers only";
                 exchange.sendResponseHeaders(403, response.getBytes().length);
                 exchange.getResponseBody().write(response.getBytes());
                 exchange.getResponseBody().close();
@@ -69,6 +77,7 @@ public class SimpleServer {
             exchange.getResponseHeaders().add("Content-Type", "application/json");
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(usersShow);
+            System.out.println(json);
             exchange.sendResponseHeaders(200, json.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(json.getBytes());

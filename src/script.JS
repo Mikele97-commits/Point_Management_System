@@ -4,7 +4,7 @@ async function showUsers() {
   let number=0
   const res = await fetch("http://localhost:8080/show");
   const data = await res.json();
-
+  console.log(data)
    const tbody = document.getElementById("usersTable").querySelector("tbody");
   tbody.innerHTML = "";
 
@@ -73,21 +73,21 @@ async function testData() {
   const user1={
     firstName:"Michał",
     lastName:"Minich",
-    email:"michal.minich@gmail.com"
+    email:"michalminich@gmail.com"
   }
     const jsonUser1=JSON.stringify(user1)
     
      const user2={
     firstName:"Karolina",
     lastName:"Dubanowska",
-    email:"karo.dub@gmail.com"
+    email:"karodub@gmail.com"
   }
     const jsonUser2=JSON.stringify(user2)
 
     const user3={
     firstName:"Marcella",
     lastName:"Ciempa",
-    email:"mar.ciemp@gmail.com"
+    email:"marciemp@gmail.com"
   }
     const jsonUser3=JSON.stringify(user3)
     

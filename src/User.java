@@ -15,6 +15,21 @@ public class User {
         this.points = points;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     public boolean isActive() {
         return active;
@@ -31,4 +46,6 @@ public class User {
     public void setPoints(int points) {
         this.points = points;
     }
+
+
 }
