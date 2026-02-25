@@ -6,7 +6,7 @@ public class User {
     boolean active;
     int points;
 
-    public User(String firstName, String lastName, int ID, String email, boolean active, int points) {
+    public User(int ID, String firstName, String lastName,  String email, boolean active, int points) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ID = ID;

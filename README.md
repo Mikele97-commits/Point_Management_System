@@ -1,6 +1,13 @@
 # Point_Managment_System
 Point-based loyalty system using HTML frontend nad Java logic
-Very raw version supporting only adding new users, with ugly UI. Work in progress, will be developed with time
-Jackson library needed to run.
+Now containing:
+-Properly working writing/reading new users to the table
+-Email correctness check
+-Intuitive, prettier, yet still ugly UI
+-Writing and reading data to/from DB file using SQL (incomplete)
+-User points/activity manipulation
+Used libraries:
+-Jackson
+
 
 To use first turn on server from the java compiler level, then you can use HTML part

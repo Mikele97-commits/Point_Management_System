@@ -139,3 +139,15 @@ async function changePoints(positive) {
 
     showUsers();
 }
+
+async function writeDB(){
+  const answer = await fetch("http://localhost:8080/write");
+  const text = await answer.text();
+  console.log(text);
+}
+
+async function readDB(){
+  const answer = await fetch("http://localhost:8080/read");
+  const text = await answer.text();
+  console.log(text);
+}
