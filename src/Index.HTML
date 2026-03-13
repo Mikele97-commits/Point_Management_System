@@ -51,7 +51,7 @@
       </tr>
       <tr>
         <th>User ID:</th>
-        <th><input type="number" id="counter" value="1" min ="1"></th>
+        <th><input type="number" id="userId" value="1" min ="1"></th>
       </tr>
       <tr>
         <th>Activate/Deactivate:</th>
@@ -64,6 +64,9 @@
         <tr><th>  <div id="pointsError" class="error"></div></th></tr>
 
     </table>
+    <button onclick="editValues()">Edit in DB</button>
+    <div id="editError" class="error"></div>
+
   </div>
 </div>
 <button onclick="testData()">Load test data</button>

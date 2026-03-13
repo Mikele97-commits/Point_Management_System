@@ -40,7 +40,7 @@ async function showUsers() {
 
     number++;
     tbody.appendChild(row);})
-    const input = document.getElementById("counter");
+    const input = document.getElementById("userId");
     input.max=number;
     
   }
@@ -73,7 +73,7 @@ async function testData() {
   const user1={
     firstName:"Michał",
     lastName:"Minich",
-    email:"michalminich@gmail.com"
+    email:"michalminich@o2.pl"
   }
     const jsonUser1=JSON.stringify(user1)
     
@@ -111,7 +111,7 @@ async function testData() {
 
 
 async function activate() {
-  let ID = document.getElementById("counter").value;
+  let ID = document.getElementById("userId").value;
   
   const answer = await fetch("http://localhost:8080/activate",{
     method: "POST",
@@ -123,7 +123,7 @@ async function activate() {
 }
 
 async function changePoints(positive) {
-    let ID = document.getElementById("counter").value;
+    let ID = document.getElementById("userId").value;
     let points=document.getElementById("points").value;
 
      if(!positive)
@@ -150,4 +150,15 @@ async function readDB(){
   const answer = await fetch("http://localhost:8080/read");
   const text = await answer.text();
   console.log(text);
+}
+
+async function editValues() {
+  let ID=document.getElementById("userId").value
+  console.log(ID)
+  const answer = await fetch("http://localhost:8080/edit",{
+    method: "POST",
+    body:ID
+    });
+    const text = await answer.text();
+    document.getElementById("editError").textContent = text;
 }

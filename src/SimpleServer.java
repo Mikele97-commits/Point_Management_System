@@ -23,6 +23,8 @@ public class SimpleServer {
         server.createContext("/points", new PointsHandler());
         server.createContext("/write", new WriteHandler());
         server.createContext("/read", new ReadHandler());
+        server.createContext("/edit", new EditHandler());
+
 
         server.start();
         Connection conn = DriverManager.getConnection("jdbc:sqlite:users.db");
@@ -73,7 +75,6 @@ public class SimpleServer {
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(response.getBytes());
             }
-
         }
     }
 
@@ -84,7 +85,6 @@ public class SimpleServer {
             exchange.getResponseHeaders().add("Content-Type", "application/json");
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(usersShow);
-            System.out.println(json);
             exchange.sendResponseHeaders(200, json.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(json.getBytes());
@@ -137,11 +137,9 @@ public class SimpleServer {
             exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, OPTIONS");
             List<User> users = UserList.users;
-            System.out.println("Stage 1");
             try {
                 Connection conn = DriverManager.getConnection("jdbc:sqlite:users.db");
-                PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users (ID, firstName, lastName, email, active, points) VALUES (?,?,?,?,?,?)");
-                System.out.println("Stage 2");
+                PreparedStatement pstmt = conn.prepareStatement("INSERT or IGNORE INTO users (ID, firstName, lastName, email, active, points) VALUES (?,?,?,?,?,?)");
                 for(User user : users){
                     pstmt.setInt(1, user.getID());
                     pstmt.setString(2, user.getFirstName());
@@ -149,15 +147,15 @@ public class SimpleServer {
                     pstmt.setString(4, user.getEmail());
                     pstmt.setInt(5, user.isActive() ? 1 : 0);
                     pstmt.setInt(6, user.getPoints());
-                    pstmt.executeUpdate();
+                    pstmt.addBatch();
                 }
-                System.out.println("Stage 3");
+                pstmt.executeBatch();
                 String response = "Data properly written to users.db";
                 exchange.sendResponseHeaders(200, response.getBytes().length);
                 exchange.getResponseBody().write(response.getBytes());
                 exchange.getResponseBody().close();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
@@ -166,7 +164,7 @@ public class SimpleServer {
         public void handle(HttpExchange exchange) throws IOException {
             exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, OPTIONS");
-
+            UserList.clearUsers();
             try {
                 Connection conn = DriverManager.getConnection("jdbc:sqlite:users.db");
                 Statement stmt = conn.createStatement();
@@ -188,7 +186,6 @@ public class SimpleServer {
                     int points = rs.getInt(6);
 
                     UserList.createAndAddUser(id,firstName,lastName,email,boolActive,points);
-                    System.out.println("User added to list");
 
                 }
                 String response = "Data properly read from users.db";
@@ -199,6 +196,43 @@ public class SimpleServer {
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    static class EditHandler implements HttpHandler{
+        public void handle(HttpExchange exchange) throws IOException {
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, OPTIONS");
+            String body = new String(exchange.getRequestBody().readAllBytes());
+            int ID = Integer.parseInt(body);
+            System.out.println("ID: " + ID);
+            User user = UserList.users.get(ID-1);
+            System.out.println("Stage 1, got userid:" + ID + "users.getID=" + user.getID());
+            if(ID!=user.getID()){
+                String response = "ID incompatible";
+                exchange.sendResponseHeaders(403, response.getBytes().length);
+                exchange.getResponseBody().write(response.getBytes());
+                exchange.getResponseBody().close();
+                return;
+            }
+            System.out.println("New activity:" + user.isActive() + "new Points:" + user.getPoints());
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:sqlite:users.db");
+                PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET active = ?, points = ? WHERE ID = ?");
+
+                pstmt.setInt(1, user.isActive() ? 1 : 0);
+                pstmt.setInt(2, user.getPoints());
+                pstmt.setInt(3, ID);
+
+                pstmt.executeUpdate();
+
+                String response = "Data properly edited in users.db. Dear random CG employee checking this, please contact me, for i need some help. My email:michal.minich@o2.pl  Thank you!";
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                exchange.getResponseBody().write(response.getBytes());
+                exchange.getResponseBody().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

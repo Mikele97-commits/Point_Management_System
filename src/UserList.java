@@ -22,4 +22,8 @@ public class UserList {
         }
         return false;
     }
+
+    public static void clearUsers() {
+        users.clear();
+    }
 }
