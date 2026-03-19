@@ -2,7 +2,9 @@
 
 async function showUsers() {
   let number=0
-  const res = await fetch("http://localhost:8080/show");
+  const res = await fetch("http://localhost:8080/user",{
+    method:"GET"
+  });
   const data = await res.json();
   console.log(data)
    const tbody = document.getElementById("usersTable").querySelector("tbody");
@@ -56,7 +58,7 @@ async function sendData(){
   }
   const jsonData=JSON.stringify(allData)
   
-  const answer = await fetch("http://localhost:8080/add",{
+  const answer = await fetch("http://localhost:8080/user",{
     method: "POST",
     body:jsonData
   });
@@ -92,17 +94,17 @@ async function testData() {
     const jsonUser3=JSON.stringify(user3)
     
 
-    fetch("http://localhost:8080/add",{
+    fetch("http://localhost:8080/user",{
     method: "POST",
     body:jsonUser1
   });
 
-  fetch("http://localhost:8080/add",{
+  fetch("http://localhost:8080/user",{
     method: "POST",
     body:jsonUser2
   });
 
-  fetch("http://localhost:8080/add",{
+  fetch("http://localhost:8080/user",{
     method: "POST",
     body:jsonUser3
   });
@@ -125,14 +127,15 @@ async function activate() {
 async function changePoints(positive) {
     let ID = document.getElementById("userId").value;
     let points=document.getElementById("points").value;
-
+    console.log("Request sent")
      if(!positive)
       points=-points;
 
-    const answer = await fetch("http://localhost:8080/points",{
-    method: "POST",
-    body:ID + "," + points
+    const answer = await fetch(`http://localhost:8080/user/${ID}`,{
+    method: "PATCH",
+    body:points
     });
+    
 
     const text = await answer.text();
     document.getElementById("pointsError").textContent = text;
