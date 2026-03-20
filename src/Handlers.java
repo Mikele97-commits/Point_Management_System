@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.sql.*;
 import java.util.List;
 
- class UserHandler implements HttpHandler {
+  class UserHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         System.out.println("Request received: " + method);
