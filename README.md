@@ -1,5 +1,5 @@
-# Point_Managment_System
-Point-based loyalty system using HTML frontend nad Java logic
+# Point_Management_System
+Point-based loyalty system using HTML frontend and Java logic
 Now containing:
 -Properly working writing/reading new users to the table
 -Email correctness check
