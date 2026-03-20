@@ -114,10 +114,8 @@ async function testData() {
 
 async function activate() {
   let ID = document.getElementById("userId").value;
-  
-  const answer = await fetch("http://localhost:8080/activate",{
-    method: "POST",
-    body:ID
+  const answer = await fetch(`http://localhost:8080/user/${ID}/activate`,{
+    method: "PATCH",
   });
   const text = await answer.text();
   console.log(text);
@@ -131,7 +129,7 @@ async function changePoints(positive) {
      if(!positive)
       points=-points;
 
-    const answer = await fetch(`http://localhost:8080/user/${ID}`,{
+    const answer = await fetch(`http://localhost:8080/user/${ID}/points`,{
     method: "PATCH",
     body:points
     });
@@ -144,13 +142,17 @@ async function changePoints(positive) {
 }
 
 async function writeDB(){
-  const answer = await fetch("http://localhost:8080/write");
+  const answer = await fetch("http://localhost:8080/database",
+    {method:"POST"}
+  );
   const text = await answer.text();
   console.log(text);
 }
 
 async function readDB(){
-  const answer = await fetch("http://localhost:8080/read");
+  const answer = await fetch("http://localhost:8080/database",
+    {method:"GET"}
+  );
   const text = await answer.text();
   console.log(text);
 }
@@ -158,8 +160,8 @@ async function readDB(){
 async function editValues() {
   let ID=document.getElementById("userId").value
   console.log(ID)
-  const answer = await fetch("http://localhost:8080/edit",{
-    method: "POST",
+  const answer = await fetch("http://localhost:8080/database",{
+    method: "PATCH",
     body:ID
     });
     const text = await answer.text();
