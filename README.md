@@ -15,7 +15,9 @@ https://github.com/Mikele97-commits/Point_Management_System
 - Simple, responsive UI for browsing and managing users/points
 
 
-To use first turn on server from the java compiler level, then you can use HTML part
+## How to Run
+1. Compile and start the Java server:
+2. Open the frontend by double-clicking `index.html` in your browser,
 
 What I Learned
 
