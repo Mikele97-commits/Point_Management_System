@@ -1,3 +1,5 @@
+package main.java;
+
 import com.sun.net.httpserver.HttpServer;
 import java.sql.*;
 import java.net.InetSocketAddress;

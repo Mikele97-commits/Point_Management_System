@@ -1,3 +1,5 @@
+package main.java;
+
 public class EmailValidator {
     public static boolean isValid(String email) {
         int dotNumber=0;

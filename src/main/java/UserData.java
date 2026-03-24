@@ -1,3 +1,5 @@
+package main.java;
+
 class UserData {
     public String firstName;
     public String lastName;
