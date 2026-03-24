@@ -14,10 +14,16 @@ https://github.com/Mikele97-commits/Point_Management_System
 - Data persisted to file using SQL statements (custom lightweight implementation)
 - Simple, responsive UI for browsing and managing users/points
 
+## Necessary libraries
+-Sqlite-jdbc 3.51.2.0
+-Jackson annotations/core/databind 2.21.0
+All included in lib folder
+
 
 ## How to Run
-1. Compile and start the Java server:
-2. Open the frontend by double-clicking `index.html` in your browser,
+1. Compile the files in cmd using javac -cp ".;lib/*" src/*.java while on the project directory
+2. Run the server using javac -cp ".;lib/*" src/SimpleServer.java while on the same directory
+3. Open the frontend by double-clicking `index.html` in your browser,
 
 What I Learned
 

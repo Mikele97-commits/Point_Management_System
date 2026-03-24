@@ -15,12 +15,9 @@ public class SimpleServer {
 
         server.start();
         Connection conn = DriverManager.getConnection("jdbc:sqlite:users.db");
+        System.out.println("Server started successfully on http://localhost:8080");
+        System.out.println("Press Ctrl+C to stop the server...");
         DataBase.create(conn);
     }
 }
 
-class UserData {
-    public String firstName;
-    public String lastName;
-    public String email;
-}
