@@ -1,0 +1,51 @@
+body{
+    background-color: #D8E2DC;
+}
+
+.error:empty {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+textarea{
+    resize: none;
+    width: 150px;
+    height: 20px;
+}
+#usersTable{
+table, th, td{
+    border: solid, black;
+    background-color: #f0bea3;
+    font-weight:bold ;
+}
+}
+#sendAndAreas{
+    font-weight: bold;
+    border: solid black;
+    background-color: #acd4bc;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#tablediv{
+    display: flex;
+    justify-content: center;
+}
+#dataAndTable{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#editdiv{
+    font-weight: bold;
+    border: solid black;
+    background-color: #acd4bc;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
