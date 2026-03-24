@@ -22,7 +22,7 @@ All included in lib folder
 
 ## How to Run
 1. Compile the files in cmd using javac -cp ".;lib/*" src/*.java while on the project directory
-2. Run the server using java -cp ".;lib/*" src/SimpleServer.java while on the same directory
+2. Run the server using java -cp ".;lib/*" src/SimpleServer.java while on the same directory 
 3. Open the frontend by double-clicking `index.html` in your browser,
 
 What I Learned
