@@ -25,6 +25,10 @@ All included in lib folder
 2. Run the server using java -cp ".;lib/*" src/SimpleServer.java while on the same directory 
 3. Open the frontend by double-clicking `index.html` in your browser,
 
+## Screenshots
+
+![Main UI - User List](screenshots/Point_Management_System.png)
+
 What I Learned
 
 Implementing a basic HTTP server from scratch in Java
